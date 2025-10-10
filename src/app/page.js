@@ -10,6 +10,7 @@ import {
   FiSun,
   FiMoon,
 } from "react-icons/fi";
+import { useCopilotReadable, useCopilotAction } from "@copilotkit/react-core";
 
 export default function TodoPage() {
   const [todos, setTodos] = useState([]);
@@ -19,6 +20,79 @@ export default function TodoPage() {
   const [query, setQuery] = useState("");
   const [dark, setDark] = useState(false);
   const inputRef = useRef(null);
+
+  // Make todos readable by Copilot
+  useCopilotReadable({
+    description:
+      "The current list of todos, including completed and pending items.",
+    value: todos,
+  });
+
+  // Define Copilot actions
+  useCopilotAction({
+    name: "addTodo",
+    description: "Add a new todo item to the list",
+    parameters: [
+      {
+        name: "text",
+        type: "string",
+        description: "The text of the todo to be added",
+        required: true,
+      },
+    ],
+    handler: ({ text }) => {
+      addOrUpdateTodo(text);
+      return `Todo "${text}" added successfully`;
+    },
+  });
+  useCopilotAction({
+    name: "deleteTodo",
+    description: "Delete or remove a todo item from the list",
+    parameters: [
+      {
+        name: "id",
+        type: "number",
+        description: "The ID of the todo to be deleted",
+        required: true,
+      },
+    ],
+    handler: ({ id }) => {
+      removeTodo(id.toString());
+      return `Todo with "${id}" Removed successfully`;
+    },
+  });
+
+  useCopilotAction({
+    name: "markTodoComplete",
+    description: "Mark a todo as complete by matching its text",
+    parameters: [
+      {
+        name: "id",
+        type: "number",
+        description: "The ID of the todo to be Mark Completed",
+        required: true,
+      },
+    ],
+    handler: ({ id }) => {
+      toggleComplete(id.toString());
+      return `Todo with "${id}" Completed successfully`;
+    },
+  });
+
+  useCopilotAction({
+    name: "updateTodo",
+    description: "Update a todo by ID",
+    parameters: [
+      { name: "id", type: "number", description: "ID of todo", required: true },
+      { name: "text", type: "string", description: "New text", required: true },
+    ],
+    handler: ({ id, text }) =>
+      setTodos((prev) =>
+        prev.map((t) =>
+          t.id === id.toString() ? { ...t, text, editedAt: Date.now() } : t
+        )
+      ) || `Todo "${text}" with ID "${id}" updated successfully`,
+  });
 
   // Load todos from localStorage once on mount
   useEffect(() => {
@@ -39,28 +113,34 @@ export default function TodoPage() {
     if (editingId !== null) inputRef.current?.focus();
   }, [editingId]);
 
-  const addOrUpdateTodo = (e) => {
-    e.preventDefault();
-    const value = text.trim();
-    if (!value) return;
+  // This handles the text logic (no event)
+  const addOrUpdateTodo = (value) => {
+    const trimmed = value.trim();
+    if (!trimmed) return;
 
     if (editingId) {
       setTodos((prev) =>
         prev.map((t) =>
-          t.id === editingId ? { ...t, text: value, editedAt: Date.now() } : t
+          t.id === editingId ? { ...t, text: trimmed, editedAt: Date.now() } : t
         )
       );
       setEditingId(null);
     } else {
       const newTodo = {
         id: Date.now().toString(),
-        text: value,
+        text: trimmed,
         completed: false,
         createdAt: Date.now(),
       };
       setTodos((prev) => [newTodo, ...prev]);
     }
+
     setText("");
+  };
+  // This is only for form submission
+  const handleAddOrUpdateTodo = (e) => {
+    e.preventDefault();
+    addOrUpdateTodo(text);
   };
 
   const startEdit = (id) => {
@@ -161,9 +241,11 @@ export default function TodoPage() {
         {/* Main */}
         <main className="bg-white dark:bg-slate-800 dark:text-slate-100 rounded-2xl shadow p-6">
           {/* Input */}
-          <form onSubmit={addOrUpdateTodo} className="flex gap-3 items-start">
+          <form
+            onSubmit={handleAddOrUpdateTodo}
+            className="flex gap-3 items-start"
+          >
             <textarea
-              ref={inputRef}
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder={editingId ? "Edit todo..." : "Write a new todo..."}
@@ -173,7 +255,7 @@ export default function TodoPage() {
               type="submit"
               className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg shadow"
             >
-              <FiPlus /> {editingId ? "Update" : "Add"}
+              {editingId ? "Update" : "Add"}
             </button>
           </form>
 
@@ -222,12 +304,6 @@ export default function TodoPage() {
                   onDrop={(e) => onDrop(e, i)}
                   className="flex items-center gap-3 p-3 rounded-xl border hover:shadow-sm bg-slate-50 dark:bg-slate-700"
                 >
-                  <input
-                    type="checkbox"
-                    checked={t.completed}
-                    onChange={() => toggleComplete(t.id)}
-                    className="w-5 h-5 cursor-pointer"
-                  />
                   <div className="flex-1 min-w-0">
                     <div
                       className={`truncate ${
@@ -240,7 +316,12 @@ export default function TodoPage() {
                       {new Date(t.createdAt).toLocaleString()}
                     </div>
                   </div>
-
+                  <input
+                    type="checkbox"
+                    checked={t.completed}
+                    onChange={() => toggleComplete(t.id)}
+                    className="w-5 h-5 cursor-pointer"
+                  />
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => startEdit(t.id)}
