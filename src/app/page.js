@@ -1,5 +1,6 @@
 "use client";
 
+import { CopilotPopup } from "@copilotkit/react-ui";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FiPlus,
@@ -267,6 +268,15 @@ export default function TodoPage() {
           </footer>
         </main>
       </div>
+      <CopilotPopup
+        instructions={
+          "You are assisting the user as best as you can. Answer in the best way possible given the data you have."
+        }
+        labels={{
+          title: "Jymes Assistent",
+          initial: "Need any help?",
+        }}
+      />
     </div>
   );
 }
