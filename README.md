@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📝 AI-Powered Todo App (with CopilotKit)
 
-## Getting Started
+A **clean, functional, and AI-integrated Todo application** built with **React**, **Tailwind CSS**, and **CopilotKit**.  
+This app allows users to manage tasks efficiently with local storage persistence and AI-assisted commands.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+- 🧠 **AI Integration (CopilotKit)** – Control your todos using natural language via Copilot actions.
+- 🌗 **Dark/Light Mode** – Toggle between themes effortlessly.
+- 📦 **Local Storage Support** – Your todos are stored locally, no account needed.
+- ✏️ **Add, Edit, Delete, and Complete Todos** – Simple CRUD functionality.
+- 🔍 **Search and Filter** – Find todos by text or filter by completion status.
+- 🖱️ **Drag and Drop Reordering** – Rearrange todos easily.
+- 💬 **Smart Copilot Actions:**
+  - `addTodo` – Add a new todo
+  - `deleteTodo` – Delete a todo by ID
+  - `markTodoComplete` – Mark a todo as complete
+  - `updateTodo` – Update the text of a todo
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology                            | Purpose                       |
+| ------------------------------------- | ----------------------------- |
+| **React**                             | Frontend UI                   |
+| **Tailwind CSS**                      | Styling                       |
+| **CopilotKit (react-core, react-ui)** | AI command integration        |
+| **React Icons**                       | Icons (FiPlus, FiEdit2, etc.) |
+| **LocalStorage**                      | Data persistence              |
+
+---
+
+---
+
+## ⚙️ Setup & Installation
+
+1. **Clone this repository**
+
+   ```bash
+   git clone https://github.com/Jagat05/todo_aipowered-simple.git
+   cd todo_aipowered-simple
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Run the app**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in your browser**
+
+---
+
+## 💡 How AI Integration Works
+
+This project uses **CopilotKit** to make your todos AI-readable and interactive.
+
+### Example:
+
+- You can tell the AI:
+  > “Add a todo to study React tomorrow.”  
+  > or  
+  > “Update todo 1739021 with new text ‘Finish AI Todo project.’”
+
+It uses:
+
+```js
+useCopilotReadable(); // Makes todos readable by AI
+useCopilotAction(); // Defines actions like add, delete, update
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 👨‍💻 Author
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Developed by [Jagat Joshi](https://github.com/your-github-username)** ❤️
 
-## Learn More
+> _"Simple. Local. Smart."_
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
