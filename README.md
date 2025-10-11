@@ -82,7 +82,7 @@ useCopilotAction(); // Defines actions like add, delete, update
 
 ## 👨‍💻 Author
 
-**Developed by [Jagat Joshi](https://github.com/your-github-username)** ❤️
+**Developed by [Jagat Joshi](https://github.com/Jagat05)** ❤️
 
 > _"Simple. Local. Smart."_
 
