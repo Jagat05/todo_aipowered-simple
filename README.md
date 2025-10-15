@@ -7,7 +7,7 @@ This app allows users to manage tasks efficiently with local storage persistence
 
 ## 🎬 Demo Preview
 
-![AI Todo App Demo](todoai.gif)
+![AI Todo App Demo](https://raw.githubusercontent.com/Jagat05/todo_aipowered-simple/main/public/todoai.gif)
 
 _(GIF preview of the app in action — showing add, edit, delete from AI )_
 
