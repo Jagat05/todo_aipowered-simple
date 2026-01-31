@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         <CopilotKit publicApiKey={process.env.NEXT_PUBLIC_OPENAI_API_KEY}>
+          {/* <CopilotKit publicApiKey="ck_pub_42fedf364e04e74d10d10e8e0043814c"> */}
           {children}
         </CopilotKit>
       </body>
