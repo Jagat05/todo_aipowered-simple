@@ -5,6 +5,9 @@ This app allows users to manage tasks efficiently with local storage persistence
 
 ---
 
+## 🎬 Live Preview
+https://todo-aipowered-simple-jj.vercel.app/
+
 ## 🎬 Demo Preview
 
 ![AI Todo App Demo](https://raw.githubusercontent.com/Jagat05/todo_aipowered-simple/main/public/todoai.gif)
